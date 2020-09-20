@@ -13,6 +13,7 @@ $ npx expo-optimize
 $ expo build:web
 //test  
 $ npx serve web-build //open http://localhost:5000
+firebase serve --only hosting
 ```
 
 add the following in package.json
@@ -39,3 +40,4 @@ $ git commit -m "msg"
 $ (git remote add origin git@github.com:zeyh/Course-Scheduler.git)
 $ git remote -v //verify the remote URL
 ```
+
