@@ -13,7 +13,7 @@ $ npx expo-optimize
 $ expo build:web
 //test  
 $ npx serve web-build //open http://localhost:5000
-firebase serve --only hosting
+$ firebase serve --only hosting
 ```
 
 add the following in package.json

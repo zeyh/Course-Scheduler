@@ -3,6 +3,7 @@ node_modules/**/*
 .firebase/*
 .expo-shared/*
 npm-debug.*
+firebase-debug.*
 *.jks
 *.p8
 *.p12

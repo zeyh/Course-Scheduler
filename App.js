@@ -1,10 +1,10 @@
-import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, { useState, useEffect }  from 'react';
+import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import CourseList from './components/CourseList';
 
 const schedule = {
-    "title": "CS Courses for 2018-2019",
-    "course":[{
+    "title": "CS Courses for 2020",
+    "courses":[{
         "id": "F101",
         "title": "Computer Science: Concepts, Philosophy, and Connections",
         "meets": "MWF 11:00-11:50"
@@ -27,18 +27,40 @@ const schedule = {
     ]
 };
 
+
+const fetchSchedule = async () => {
+    const response = await fetch(url); //using async and await to get the schedule JSON data
+    if (!response.ok) throw response;
+    const json = await response.json();
+    setSchedule(json); //store it using the setSchedule() function created by useState()
+};
+
 const Banner = ({title}) => (
-    <Text style={styles.bannerStyle}>{title}</Text>
+    <Text style={styles.bannerStyle}>{title || '[loading...]'}</Text>
+    // show "[loading...]" until the data has been received.
 );
 
 
 const App = () => {
-  return (
-    <SafeAreaView style={styles.container}>
-      <Banner title={schedule.title} />
-      <CourseList courses={schedule.course} />
-    </SafeAreaView>
-  );
+    //Fetch data from a URL
+    const [schedule, setSchedule] = useState({ title: '', courses: [] });
+    const url = 'https://courses.cs.northwestern.edu/394/data/cs-courses.php';
+    useEffect(() => { //run only when the values of any of those variables has changed since the last run
+        const fetchSchedule =  async () => {
+            const response = await fetch(url);
+            if (!response.ok) throw response;
+            const json = await response.json();
+            setSchedule(json);
+        }
+        fetchSchedule();
+    }, []);
+  
+    return (
+        <SafeAreaView style={styles.container}>
+        <Banner title={schedule.title} />
+        <CourseList courses={schedule.courses} />
+        </SafeAreaView>
+    );
 }
 
 const styles = StyleSheet.create({
