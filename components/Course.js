@@ -5,11 +5,12 @@ const getCourseNumber = course => (
   course.id.slice(1)
 )
 
-const Course = ({course, isDisabled, isSelected, select}) => (
+const Course = ({course, isDisabled, isSelected, select, view}) => (
     //add selection property to tge course
     // add a isDisabled property, and a disabled stlye, that uses a grey color, #d3d3d3
     <TouchableOpacity style={styles[isDisabled ? 'courseButtonDisabled' : isSelected ? 'courseButtonSelected' : 'courseButton']}
-        onPress={() => { if (!isDisabled) select(course); }}>
+        onPress={() => { if (!isDisabled) select(course); }}
+        onLongPress={() => view(course)} >
         <Text style={styles.courseText}>
         {`CS ${getCourseNumber(course)}\n${course.meets}`}
         </Text>

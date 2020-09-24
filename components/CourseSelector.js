@@ -4,7 +4,7 @@ import Course from './Course';
 import {hasConflict} from '../utils/course.js';
 
 
-const CourseSelector = ({courses}) => {
+const CourseSelector = ({courses, view}) => {
     const [selected, setSelected] = useState([]); //init empty list - state variable for the list of currently selected courses
     
     // adds a course to or removes a course from selected:
@@ -20,7 +20,7 @@ const CourseSelector = ({courses}) => {
                 select={toggle}
                 isDisabled={hasConflict(course, selected)}
                 isSelected={selected.includes(course)}
-                
+                view={view}
               />
             ))
           }
