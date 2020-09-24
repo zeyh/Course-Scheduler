@@ -2,19 +2,21 @@ import React from 'react';
 import {StyleSheet, TouchableOpacity, View, Text} from 'react-native';
 
 
+//once selected, pass setSelectedTerm(term) to the term selector
 const TermButton = ({term, isActive, setSelectedTerm}) => (
     <TouchableOpacity style={styles[isActive ? 'termButtonActive' : 'termButton']}
-        onPress={() => setSelectedTerm(term)}>
+        onPress={() => setSelectedTerm(term)}> 
       <Text style={styles.termText}>{term}</Text>
     </TouchableOpacity>
 );
   
 const TermSelector = ({terms, selectedTerm, setSelectedTerm}) => (
-    <View style={styles.termSelector}>
-      { 
+    //set style
+    <View style={styles.termSelector}> 
+      { //it passes a flag indicating if the term is selected or not.
         terms.map(term => (
           <TermButton key={term} term={term} setSelectedTerm={setSelectedTerm}
-            isActive={term === selectedTerm}
+            isActive={term === selectedTerm} //after onPress, call the termButtom fcn and pass the parameters
           />
         ))
       }
@@ -43,9 +45,9 @@ const TermSelector = ({terms, selectedTerm, setSelectedTerm}) => (
         ...termButtonBase,
         backgroundColor: '#4f9f64'
     },
-    termButtonActive: {
+    termButtonActive: { //a different style when it is selected
         ...termButtonBase,
-        backgroundColor: '#105f25',
+        backgroundColor: '#105f25', 
     },
     termText: {
       color: '#fff',
