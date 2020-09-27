@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useState, useEffect } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 const Field = ({label, value}) => {
@@ -10,7 +10,7 @@ const Field = ({label, value}) => {
   );
 };
 
-const CourseDetailScreen = ({route}) => {
+const CourseDetailScreen = ({navigation, route}) => {
   const course = route.params.course;
 
   return (

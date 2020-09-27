@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState, useEffect } from 'react';
 import { ScrollView, View} from 'react-native';
 
 import TermSelector from './TermSelector';
