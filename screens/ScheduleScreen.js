@@ -4,7 +4,13 @@ import { SafeAreaView, StyleSheet, Text,} from 'react-native';
 import CourseList from '../components/CourseList';
 import UserContext from '../UserContext';
 import CourseEditScreen from './CourseEditScreen';
+import { firebase } from "../firebase" //add {}
 
+//point to the root of the entire database.
+const fixCourses = json => ({
+  ...json,
+  courses: Object.values(json.courses)
+});
 
 const Banner = ({title}) => (
     <Text style={styles.bannerStyle}>{title || '[loading...]'}</Text>
@@ -18,17 +24,27 @@ const ScheduleScreen = ({navigation}) => {
     const canEdit = user && user.role === 'admin';
 
     //Fetch data from a URL
-    const [schedule, setSchedule] = useState({ title: '', courses: [] });
-    const url = 'https://courses.cs.northwestern.edu/394/data/cs-courses.php';
-    
-    useEffect(() => { //run only when the values of any of those variables has changed since the last run
-        const fetchSchedule =  async () => {
-            const response = await fetch(url);
-            if (!response.ok) throw response;
-            const json = await response.json();
-            setSchedule(json);
-        }
-        fetchSchedule();
+  const [schedule, setSchedule] = useState({ title: '', courses: [] });
+  
+    //fetch data from url
+    // const url = 'https://courses.cs.northwestern.edu/394/data/cs-courses.php';
+    // useEffect(() => { //run only when the values of any of those variables has changed since the last run
+    //     const fetchSchedule =  async () => {
+    //         const response = await fetch(url);
+    //         if (!response.ok) throw response;
+    //         const json = await response.json();
+    //         setSchedule(json);
+    //     }
+    //     fetchSchedule();
+    // }, []);
+
+    //replace the Firebase courses object with the list of the courses that the rest of the code expects.
+    useEffect(() => {
+      const db = firebase.database().ref();
+      db.on('value', snap => {
+        if (snap.val()) setSchedule(fixCourses(snap.val())) ;
+      }, error => console.log(error));
+      return () => { db.off('value', handleData); };
     }, []);
     
     const view = (course) => {
