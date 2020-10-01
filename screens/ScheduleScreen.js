@@ -44,7 +44,7 @@ const ScheduleScreen = ({navigation}) => {
       db.on('value', snap => {
         if (snap.val()) setSchedule(fixCourses(snap.val())) ;
       }, error => console.log(error));
-      return () => { db.off('value', handleData); };
+      return () => { db.off('value', handleData); }; 
     }, []);
     
     const view = (course) => {
